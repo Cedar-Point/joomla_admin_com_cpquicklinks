@@ -1,0 +1,116 @@
+#links h3 {
+	text-align:center;
+}
+#links {
+	min-width:900px;
+}
+#fashade {
+	position:fixed;
+	overflow:auto;
+	top:0px;
+	left:0px;
+	width:300px;
+	height:500px;
+	padding:10px;
+	background-color:whitesmoke;
+	top:calc(50% - 250px);
+	left:calc(50% - 150px);
+	border:1px solid lightgray;
+	box-shadow:inset 1px 1px 0px white, inset -1px -1px 0px white, 0px 0px 10px lightgray;
+}
+#fashade h1 {
+	text-align:center;
+}
+#fashade .search {
+	margin:0px;
+	width:calc(100% - 15px);
+}
+#fashade .fawrap .fa {
+	height:30px;
+	display:block;
+	line-height:30px;
+	padding:5px;
+	font-size:20px;
+	background-color:white;
+	border:1px solid white;
+	box-shadow:inset 1px 1px 0px lightgray, inset -1px -1px 0px lightgray;
+	cursor:pointer;
+	margin-top:5px;
+	overflow:hidden;
+}
+#fashade .fawrap .fa::before {
+	margin-right:10px;
+	margin-left:5px;
+}
+#links span.fa {
+	font-size:20px;
+	line-height:20px;
+	margin-bottom:5px;
+	margin-top:5px;
+	display:inline-block;
+	vertical-align:bottom;
+	height:20px;
+	cursor:pointer;
+	margin-right:10px;
+	width:20px;
+	text-align:center;
+}
+#links span.fa:hover {
+	background-color:whitesmoke;
+}
+#links input {
+    height:16px;
+    padding:2px;
+    width:380px;
+    background-color:transparent;
+    border:none;
+    font-size:14px;
+    vertical-align:top;
+    margin-bottom:5px;
+	margin-top:5px;
+}
+#links input.cat {
+    width:754px;
+}
+#links .wrap .button {
+    height:10px;
+    line-height:10px;
+    width:15px;
+    float:right;
+	cursor:pointer;
+}
+#links input.cat {
+    font-weight:bold;
+}
+#links input:hover {
+    background-color:whitesmoke;
+}
+#links input:focus {
+    background-color:white;
+}
+#links .category {
+    margin-bottom:20px;
+}
+#links .link {
+    margin-left:20px;
+}
+#links .center {
+	text-align:center;
+}
+#links .icon-refresh {
+	margin-top:50px;
+	display:inline-block;
+	width:50px;
+	height:50px;
+	transform-origin:50% 50%;
+	font-size:50px;
+	animation:spin infinite linear 1s;
+	line-height:50px;
+}
+@keyframes spin {
+	0% {
+		transform:rotate(0deg);
+	} 100% {
+		transform:rotate(360deg);
+	}
+}
