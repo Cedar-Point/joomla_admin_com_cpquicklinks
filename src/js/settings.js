@@ -7,16 +7,20 @@ function updateLinks() {
 	$.post('index.php?option=com_cpquicklinks&api', {'get':''}, function(data) {
 		$('#links .wrap').html('');
 		if($.isEmptyObject(data)) {
-			data = {'':{'':''}};
+			data = {'':{'icon':'','links':{}}};
 		}
 		$.each(data, function(cat) {
 			var links = this.links;
 			if($.isEmptyObject(links)) {
-				links = {'':''};
+				links = {'':{'href':'','popout':true}};
 			}
 			var category = $(linksCategory);
 			$(category).find('input.cat').val(cat);
-			$(category).find('span.fa').attr('class', 'fa '+this.icon).attr('icon', this.icon);
+			if(this.icon == '') {
+				$(category).find('span.fa');
+			} else {
+				$(category).find('span.fa').attr('class', 'fa '+this.icon).attr('icon', this.icon);
+			}
 			$('#links .wrap').append(category);
 			$.each(links, function(name) {
 				var link = $(linksLink);
@@ -104,7 +108,6 @@ $(document).ready(function() {
 				}
 			});
 		});
-		console.log(JSON.stringify(linkData));
 		$.post('index.php?option=com_cpquicklinks&api', {'save':JSON.stringify(linkData)}, function(error) {
 			if(error !== '') {
 				saveButton.text('Save aborted.');
