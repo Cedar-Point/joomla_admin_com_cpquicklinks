@@ -11,10 +11,9 @@ if(isset($_POST['get'])) {
 	$return = array();
 	$count = 0;
 	foreach($cats as $key => $cat) {
-		$count++;
 		$link_format = array();
 		$conditions = array(
-			$db->quoteName('link_cat_id') . ' = '.$count
+			$db->quoteName('link_cat_id') . ' = '.$count++
 		);
 		$query = $db
 		->getQuery(true)
@@ -52,11 +51,12 @@ if(isset($_POST['get'])) {
 	
 	$save = json_decode($_POST['save'], true);
 	if(is_array($save) && !empty($save)) {
-		$count = 0;
+		$cat_id = 0;
+		$link_id = 0;
 		foreach($save as $cat_name => $cat_array) {
 			if(isset($cat_name) && !empty($cat_name) && isset($cat_array) && is_array($cat_array) && is_array($cat_array['links']) && !empty($cat_array['links'])) {
-				$count++;
 				$cat = new stdClass();
+				$cat->cat_id = $cat_id;
 				$cat->cat_name = $cat_name;
 				$cat->cat_font_awesome = $cat_array['icon'];
 				JFactory::getDbo()->insertObject('lwr6z_com_cpquicklinks_categories', $cat);
@@ -67,13 +67,15 @@ if(isset($_POST['get'])) {
 							$target = '_blank';
 						}
 						$link = new stdClass();
+						$link->link_id = $link_id++;
 						$link->link_name = $link_name;
 						$link->link_url = $link_array['href'];
-						$link->link_cat_id = $count;
+						$link->link_cat_id = $cat_id;
 						$link->link_target = $target;
 						JFactory::getDbo()->insertObject('lwr6z_com_cpquicklinks_links', $link);
 					}
 				}
+				$cat_id++;
 			}
 		}
 	}
