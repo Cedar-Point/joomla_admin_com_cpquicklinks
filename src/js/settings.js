@@ -1,6 +1,6 @@
 var $ = jQuery;
 var linksCategory = '<div class="category"><span icon="" class="fa fa-circle-thin" title="Change icon"></span><input class="cat" type="text" placeholder="Category Name"><span class="button add icon-plus" title="Add"></span><span class="button up icon-chevron-up" title="Move Up"></span></div>';
-var linksLink = '<div class="link"><input class="name" type="text" placeholder="Link Name"><input class="href" type="text" placeholder="Link URL"><span class="button add icon-plus" title="Add"></span><span class="button up icon-chevron-up" title="Move Up"></span></div>';
+var linksLink = '<div class="link"><input class="name" type="text" placeholder="Link Name"><input class="href" type="text" placeholder="Link URL"><span class="button add icon-plus" title="Add"></span><span class="button up icon-chevron-up" title="Move Up"></span><span class="button poptoggle icon-new-tab on" title="Toggle: Popout to a New Tab"></span></div>';
 var iconCat = {};
 function updateLinks() {
 	$('#links .wrap').html('<h3>Please wait...</h3><div class="center"><div class="icon-refresh"></div></div>');
@@ -21,7 +21,10 @@ function updateLinks() {
 			$.each(links, function(name) {
 				var link = $(linksLink);
 				$(link).find('input.name').val(name);
-				$(link).find('input.href').val(this);
+				$(link).find('input.href').val(this['href']);
+				if(!this['popout']) {
+					$(link).find('.button.poptoggle').removeClass('on');
+				}
 				$(category).append(link);
 			});
 		});
@@ -69,6 +72,9 @@ $(document).ready(function() {
 	$('#links').on('click', '.link .button.add', function() {
 	   $(this).parent('.link').after(linksLink);
 	});
+	$('#links').on('click', '.link .button.poptoggle', function() {
+	   $(this).toggleClass('on');
+	});
 	$('#links').on('click', '.category > .button.up', function() {
 		$(this).parent('.category').insertBefore($(this).parent('.category').prev('.category'));
 	});
@@ -88,7 +94,14 @@ $(document).ready(function() {
 			linkData[key]['icon'] = $(this).find('span.fa').attr('icon');
 			linkData[key]['links'] = {};
 			$.each($(this).find('.link'), function() {
-				linkData[key]['links'][$(this).find('input.name').val()] = $(this).find('input.href').val();
+				var linkName = $(this).find('input.name').val();
+				linkData[key]['links'][linkName] = {};
+				linkData[key]['links'][linkName]['href'] = $(this).find('input.href').val();
+				if($(this).find('.button.poptoggle').hasClass('on')) {
+					linkData[key]['links'][linkName]['popout'] = true;
+				} else {
+					linkData[key]['links'][linkName]['popout'] = false;
+				}
 			});
 		});
 		console.log(JSON.stringify(linkData));
