@@ -2,7 +2,9 @@ var $ = jQuery;
 var linksCategory = '<div class="category"><span icon="" class="fa fa-circle-thin" title="Change icon"></span><input class="cat" type="text" placeholder="Category Name"><span class="button add icon-plus" title="Add"></span><span class="button up icon-chevron-up" title="Move Up"></span></div>';
 var linksLink = '<div class="link"><input class="name" type="text" placeholder="Link Name"><input class="href" type="text" placeholder="Link URL"><span class="button add icon-plus" title="Add"></span><span class="button up icon-chevron-up" title="Move Up"></span><span class="button poptoggle icon-new-tab on" title="Toggle: Popout to a New Tab"></span></div>';
 var iconCat = {};
+var saveEnabled = true;
 function updateLinks() {
+	saveEnabled = false;
 	$('#links .wrap').html('<h3>Please wait...</h3><div class="center"><div class="icon-refresh"></div></div>');
 	$.post('index.php?option=com_cpquicklinks&api', {'get':''}, function(data) {
 		$('#links .wrap').html('');
@@ -32,6 +34,7 @@ function updateLinks() {
 				$(category).append(link);
 			});
 		});
+		saveEnabled = true;
 	}, 'json');
 }
 $(document).ready(function() {
@@ -89,37 +92,39 @@ $(document).ready(function() {
 		updateLinks();
 	});
 	$('#toolbar .button-apply').attr('onclick', null).click(function() {
-		var saveButton = $(this);
-		var linkData = {};
-		saveButton.text('Saving...');
-		$.each($('#links .category'), function() {
-			var key = $(this).find('input.cat').val();
-			linkData[key] = {};
-			linkData[key]['icon'] = $(this).find('span.fa').attr('icon');
-			linkData[key]['links'] = {};
-			$.each($(this).find('.link'), function() {
-				var linkName = $(this).find('input.name').val();
-				linkData[key]['links'][linkName] = {};
-				linkData[key]['links'][linkName]['href'] = $(this).find('input.href').val();
-				if($(this).find('.button.poptoggle').hasClass('on')) {
-					linkData[key]['links'][linkName]['popout'] = true;
-				} else {
-					linkData[key]['links'][linkName]['popout'] = false;
-				}
+		if(saveEnabled) {
+			var saveButton = $(this);
+			var linkData = {};
+			saveButton.text('Saving...');
+			$.each($('#links .category'), function() {
+				var key = $(this).find('input.cat').val();
+				linkData[key] = {};
+				linkData[key]['icon'] = $(this).find('span.fa').attr('icon');
+				linkData[key]['links'] = {};
+				$.each($(this).find('.link'), function() {
+					var linkName = $(this).find('input.name').val();
+					linkData[key]['links'][linkName] = {};
+					linkData[key]['links'][linkName]['href'] = $(this).find('input.href').val();
+					if($(this).find('.button.poptoggle').hasClass('on')) {
+						linkData[key]['links'][linkName]['popout'] = true;
+					} else {
+						linkData[key]['links'][linkName]['popout'] = false;
+					}
+				});
 			});
-		});
-		$.post('index.php?option=com_cpquicklinks&api', {'save':JSON.stringify(linkData)}, function(error) {
-			if(error !== '') {
-				saveButton.text('Save aborted.');
-				alert(error);
-			} else {
-				saveButton.text('Saved!');
-				updateLinks();
-			}
-			setTimeout(function() {
-				saveButton.html('<span class="icon-apply icon-white" aria-hidden="true"></span> Save');
-			}, 2000);
-		});
+			$.post('index.php?option=com_cpquicklinks&api', {'save':JSON.stringify(linkData)}, function(error) {
+				if(error !== '') {
+					saveButton.text('Save aborted.');
+					alert(error);
+				} else {
+					saveButton.text('Saved!');
+					updateLinks();
+				}
+				setTimeout(function() {
+					saveButton.html('<span class="icon-apply icon-white" aria-hidden="true"></span> Save');
+				}, 2000);
+			});
+		}
 	});
 	updateLinks();
 });

@@ -1,6 +1,5 @@
 <?php
 defined('_JEXEC') or die;
-
 if(isset($_GET['api'])) {
 	require(__DIR__.'./cpquicklinks_api.php');
 } else {
