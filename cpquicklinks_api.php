@@ -1,6 +1,6 @@
 <?php
 defined('_JEXEC') or die;
-if(isset($_POST['get'])) {
+function getQuickLinks() {
 	$db = JFactory::getDbo();
 	$query = $db
 	->getQuery(true)
@@ -38,7 +38,10 @@ if(isset($_POST['get'])) {
 		);
 		$count++;
 	}
-	echo json_encode($return);
+	return $return;
+}
+if(isset($_POST['get'])) {
+	echo json_encode(getQuickLinks());
 } elseif(isset($_POST['save']) && !empty($_POST['save'])) {
 	$db = JFactory::getDbo();
 	$query = $db->getQuery(true)
@@ -79,5 +82,4 @@ if(isset($_POST['get'])) {
 		}
 	}
 }
-exit();
 ?>
