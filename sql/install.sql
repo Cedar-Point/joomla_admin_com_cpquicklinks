@@ -8,7 +8,7 @@ CREATE TABLE `lwr6z_com_cpquicklinks_categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `lwr6z_com_cpquicklinks_links` (
-  `link_id` int(11) NOT NULL AUTO_INCREMENT,
+  `link_id` int(11) NOT NULL,
   `link_cat_id` int(11) NOT NULL,
   `link_name` varchar(100) NOT NULL,
   `link_url` text NOT NULL,
