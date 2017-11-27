@@ -13,7 +13,7 @@ function getQuickLinks() {
 	foreach($cats as $key => $cat) {
 		$link_format = array();
 		$conditions = array(
-			$db->quoteName('link_cat_id') . ' = '.$count
+			$db->quoteName('link_cat_id').' = '.$count
 		);
 		$query = $db
 		->getQuery(true)
