@@ -1,6 +1,6 @@
 var $ = jQuery;
 var linksCategory = '<div class="category"><span icon="" class="fa fa-circle-thin" title="Change icon"></span><input class="cat" type="text" placeholder="Category Name"><span class="button add icon-plus" title="Add"></span><span class="button up icon-chevron-up" title="Move Up"></span></div>';
-var linksLink = '<div class="link"><input class="name" type="text" placeholder="Link Name"><input class="href" type="text" placeholder="Link URL"><span class="button add icon-plus" title="Add"></span><span class="button up icon-chevron-up" title="Move Up"></span><span class="button poptoggle icon-new-tab on" title="Toggle: Popout to a New Tab"></span></div>';
+var linksLink = '<div class="link"><input class="name" type="text" placeholder="Link Name;Link Description"><input class="href" type="text" placeholder="Link URL"><span class="button add icon-plus" title="Add"></span><span class="button up icon-chevron-up" title="Move Up"></span><span class="button poptoggle icon-new-tab on" title="Toggle: Popout to a New Tab"></span></div>';
 var iconCat = {};
 var saveEnabled = true;
 function updateLinks() {
