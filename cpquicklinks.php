@@ -8,6 +8,6 @@ if(isset($_GET['api'])) {
 	JToolBarHelper::apply();
 	JToolBarHelper::cancel();
 	JToolBarHelper::preview('../?option=com_cpquicklinks');
-	echo file_get_contents(__DIR__.'./src/html/settings.html');
+	echo file_get_contents(__DIR__.'/src/html/settings.html');
 }
 ?>
